@@ -4,7 +4,7 @@ from functools import lru_cache
 from os import getenv
 from subprocess import CalledProcessError, run
 
-from prometheus_client import Summary, start_http_server
+from prometheus_client import Gauge, start_http_server
 
 
 class TemperatureNotFoundError(Exception):
@@ -54,12 +54,12 @@ if __name__ == "__main__":
     # Setup
     arcconf = Arcconf(hba)
     start_http_server(port)
-    temperature_summary = Summary(
+    temperature_gauge = Gauge(
         "temperature", "Temperature of the RAID controller in degrees Celsius"
     )
 
     # Loop
     while True:
         temperature = arcconf.get_temperature()
-        temperature_summary.observe(temperature)
+        temperature_gauge.set(temperature)
         time.sleep(interval)
