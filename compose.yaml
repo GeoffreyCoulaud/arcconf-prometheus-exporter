@@ -1,0 +1,12 @@
+services:
+
+  arcconf-prometheus-exporter:
+    image: geoffreycoulaud/arcconf-prometheus-exporter:arcconf_v4_01_24763
+    container_name: arcconf-prometheus-exporter
+    restart: unless-stopped
+    privileged: true # Required to communicate with the HBA
+    environment:
+      - HBA=1 # The arcconf HBA number (default: 1)
+      - INTERVAL=1.0 # The interval in seconds the exporter updates the metrics (default: 1.0)
+    ports:
+      - 80:80

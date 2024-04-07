@@ -22,8 +22,8 @@ class Arcconf:
     @lru_cache(maxsize=1)
     def __get_arcconf_report(self, timestamp: float) -> str:
         del timestamp  # Unused, for cache invalidation
-        command = f"arcconf getconfig {self.__hba} AD"
-        process = run(command, capture_output=True, encoding="utf-8", check=True)
+        command = ("/bin/arcconf", "getconfig", str(self.__hba), "AD")
+        process = run(args=command, capture_output=True, encoding="utf-8", check=True)
         return process.stdout
 
     def __extract_temperature_line(self, arcconf_output: str) -> str:
@@ -54,7 +54,9 @@ if __name__ == "__main__":
     # Setup
     arcconf = Arcconf(hba)
     start_http_server(port)
-    temperature_summary = Summary("temperature", "Temperature of the RAID controller")
+    temperature_summary = Summary(
+        "temperature", "Temperature of the RAID controller in degrees Celsius"
+    )
 
     # Loop
     while True:
