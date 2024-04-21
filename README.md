@@ -26,3 +26,15 @@ cd arcconf-prometheus-exporter
 docker build -t YOUR_DOCKER_USERNAME/arcconf-prometheus-exporter:TAG .
 docker push YOUR_DOCKER_USERNAME/arcconf-prometheus-exporter:TAG
 ```
+
+Building latest tested arcconf :
+```sh
+docker build -t geoffreycoulaud/arcconf-prometheus-exporter:v4_01_24763 .
+docker push geoffreycoulaud/arcconf-prometheus-exporter:v4_01_24763
+```
+
+Building arcconf v2 :
+```sh
+docker build --build-arg ARCCONF_VERSION=v2_02_22404 --build-arg ARCCONF_ARCHIVE_EXECUTABLE_PATH=linux_x64/cmdline/arcconf -t geoffreycoulaud/arcconf-prometheus-exporter:v2_02_22404 .
+docker push geoffreycoulaud/arcconf-prometheus-exporter:v2_02_22404
+```
